@@ -1,26 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Material from './material/app';
+import Antd from './antd/app';
+import Base from './baseui/app';
+
+const apps = {
+  material: Material,
+  antd: Antd,
+  baseui: Base
+};
 
 class App extends Component {
+  state = {
+    app: null
+  }
+
+  componentWillMount() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const app = urlParams.get('app');
+
+    this.setState({ app })
+
+    performance.mark('render');
+  }
+
+  componentDidMount() {
+    console.log(performance.now('render'));
+  }
+
   render() {
+    const AppToRender = apps[this.state.app];
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <React.Fragment>
+        <AppToRender />
+      </React.Fragment>
     );
   }
 }
