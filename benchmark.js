@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const ss = require('simple-statistics')
-const RUNS = 100;
+const RUNS = 20;
 
 async function main() {
   const browser = await puppeteer.launch();
@@ -25,9 +25,9 @@ async function main() {
     metrics.antd.push(timing);
   }
 
-  console.log('baseui', ss.mean(metrics.baseui))
-  console.log('material', ss.mean(metrics.material))
-  console.log('antd', ss.mean(metrics.antd))
+  console.log('baseui', ss.median(metrics.baseui))
+  console.log('material', ss.median(metrics.material))
+  console.log('antd', ss.median(metrics.antd))
   await browser.close();
 }
 

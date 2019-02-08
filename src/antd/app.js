@@ -4,9 +4,12 @@ import "antd/dist/antd.css";
 
 function App() {
   return (
-    <Button type="primary">
-      Hello World
-    </Button>
+    <React.Fragment>
+      <Button type="primary">Primary</Button>
+      <Button>Default</Button>
+      <Button type="dashed">Dashed</Button>
+      <Button type="danger">Danger</Button>
+    </React.Fragment>
   );
 }
 

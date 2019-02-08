@@ -3,9 +3,20 @@ import Button from '@material-ui/core/Button';
 
 function App() {
   return (
-    <Button variant="contained" color="primary">
-      Hello World
-    </Button>
+    <React.Fragment>
+      <Button variant="contained">
+        Default
+      </Button>
+      <Button variant="contained" color="primary">
+        Primary
+      </Button>
+      <Button variant="contained" color="secondary">
+        Secondary
+      </Button>
+      <Button variant="contained" color="secondary" disabled>
+        Disabled
+      </Button>
+    </React.Fragment>
   );
 }
 
