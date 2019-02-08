@@ -21,11 +21,6 @@ class App extends Component {
 
     this.setState({ app })
 
-    performance.mark('render');
-  }
-
-  componentDidMount() {
-    console.log(performance.now('render'));
   }
 
   render() {
