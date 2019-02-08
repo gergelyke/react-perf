@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const ss = require('simple-statistics')
-
 const RUNS = 100;
 
 async function main() {
+  const browser = await puppeteer.launch();
   const metrics = {
     baseui: [],
     material: [],
@@ -11,27 +11,27 @@ async function main() {
   };
 
   for (let i = 0; i < RUNS; i++) {
-    const timing = await getPaintMetric('baseui');
+    const timing = await getPaintMetric(browser, 'baseui');
     metrics.baseui.push(timing);
   }
 
   for (let i = 0; i < RUNS; i++) {
-    const timing = await getPaintMetric('material');
+    const timing = await getPaintMetric(browser, 'material');
     metrics.material.push(timing);
   }
 
   for (let i = 0; i < RUNS; i++) {
-    const timing = await getPaintMetric('antd');
+    const timing = await getPaintMetric(browser, 'antd');
     metrics.antd.push(timing);
   }
 
   console.log('baseui', ss.mean(metrics.baseui))
   console.log('material', ss.mean(metrics.material))
   console.log('antd', ss.mean(metrics.antd))
+  await browser.close();
 }
 
-async function getPaintMetric(library) {
-  const browser = await puppeteer.launch();
+async function getPaintMetric(browser, library) {
   const page = await browser.newPage();
   await page.goto(`http://localhost:3000/?app=${library}`, {
     waitUntil: 'networkidle0'
@@ -48,7 +48,6 @@ async function getPaintMetric(library) {
     return firstContentfulPaintTiming;
   });
 
-  await browser.close();
   return result
 }
 
